@@ -11,8 +11,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.huffman-coding/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.huffman-coding/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HuffmanTree.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HuffmanTree.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Manager/TextManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Manager/TextManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/huffman-coding.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/huffman-coding.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666446582478</updated>
-      <workItem from="1666446625376" duration="22801000" />
+      <workItem from="1666446625376" duration="26505000" />
     </task>
     <servers />
   </component>

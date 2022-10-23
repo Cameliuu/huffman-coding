@@ -1,5 +1,8 @@
 using System.Collections;
 using ShellProgressBar;
+using System;
+using System.IO;
+using System.Text;
 
 namespace huffman_coding.Manager;
 
@@ -15,37 +18,69 @@ public class TextManager
         BitArray encoded = _huffmanTree.Encode(_fileContent);
         byte[] bytes = ConvertToByte(encoded);
         _fileManager.WriteCompressedFile(bytes);
-        Console.WriteLine("File encoded successfully!");
-        Console.WriteLine();
-        
+        DisplayFileInfo("test3.txt");
         byte[] bytes2 = File.ReadAllBytes("test1");
         var bitarray=new BitArray (bytes2);
         string decoded = _huffmanTree.Decode(bitarray);
             
         File.WriteAllText("test3.txt", decoded);
-        Console.WriteLine("Text File Decoded Successfuly\n");
     }
 
-    public void DisplayProgressBar()
+    public void DisplayProgressBar(string coding)
     {
+        ProgressBarOptions? options;
+        options = new ProgressBarOptions();
         const int totalTicks = 10;
-        var options = new ProgressBarOptions
+        switch (coding)
         {
-            ProgressCharacter = '#',
-            ForegroundColorError = ConsoleColor.Red,
-            ShowEstimatedDuration = false,
-            ProgressBarOnBottom = true,
-            DisplayTimeInRealTime = false
-        };
-        using (var pbar = new ProgressBar(totalTicks, "Encoding in progress", options))
+            case "Encoding":
+
+
+                    options.ProgressCharacter = '#';
+                    options.ForegroundColorError = ConsoleColor.Red;
+                    options.ForegroundColor = ConsoleColor.Green;
+                    options.ShowEstimatedDuration = false;
+                    options.ProgressBarOnBottom = true;
+                    options.DisplayTimeInRealTime = false;
+                
+                break;
+            case "Decoding":
+                 {
+                    options.ProgressCharacter = '#';
+                    options.ForegroundColorError = ConsoleColor.Red;
+                    options.ForegroundColor = ConsoleColor.DarkRed;
+                    options.ShowEstimatedDuration = false;
+                    options.ProgressBarOnBottom = true;
+                    options.DisplayTimeInRealTime = false;
+                };
+                break;
+        }
+        
+        using (var pbar = new ProgressBar(totalTicks, $"{coding} in progress", options))
         {
             for(int i=1;i<=10;i++)
             {
                 pbar.Tick();
-                System.Threading.Thread.Sleep(50);
+                System.Threading.Thread.Sleep(25);
             }
-            pbar.Message = "Encoding Complete!";
+            pbar.Message = $"{coding} Complete!";
         }
+
+        Console.WriteLine("\n");
+    }
+
+    public void DisplayFileInfo(string path)
+    {
+        FileInfo fileInfo = new FileInfo(path);
+        Console.WriteLine("--------------------------------------INFORMATII FISIER--------------------------------------");
+        Console.WriteLine($"Marime:{path.Length}");
+    }
+    
+
+    public long GetFileSize(string path)    
+    {
+        FileInfo fileInfo = new FileInfo(path);
+        return path.Length;
     }
 
     static byte[] ConvertToByte(BitArray bits) {
