@@ -20,8 +20,7 @@ public class TextManager
         byte[] bytes2 = File.ReadAllBytes("test1");
         var bitarray=new BitArray (bytes2);
         string decoded = _huffmanTree.Decode(bitarray);
-
-        // write the decoded file in txt file
+        
         File.WriteAllText("test3.txt", decoded);
         Console.WriteLine("Text File Decoded Successfuly\n");
     }
