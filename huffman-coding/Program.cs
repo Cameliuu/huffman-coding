@@ -3,4 +3,5 @@
 using huffman_coding.Manager;
 
 TextManager textManager = new TextManager();
+
 textManager.Run();
