@@ -1,7 +1,10 @@
+using System.Collections;
+
 namespace huffman_coding.Manager;
 
 public class FileManager
 {
+    
     public string GetFileContent(string path)
     {
         if (path.Equals(String.Empty))
@@ -17,5 +20,20 @@ public class FileManager
         }
 
         return File.ReadAllText(path);
+    }
+
+    public byte[] GetFileBytes(string path)
+    {
+        return File.ReadAllBytes(path);
+    }
+
+    public void WriteCompressedFile(byte[] data)
+    {
+        string name = "test1";
+        if (!File.Exists(name))
+            File.Create(name);
+        
+            File.WriteAllBytes(name,data);
+        
     }
 }

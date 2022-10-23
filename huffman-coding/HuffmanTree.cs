@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace huffman_coding;
 
 public class HuffmanTree
@@ -5,6 +7,7 @@ public class HuffmanTree
     private List<HuffmanNode> nodes = new List<HuffmanNode>();
     public Dictionary<char, int> dict = new Dictionary<char, int>(){};
     public HuffmanNode root { get; set; }
+            
 
     public void Build(string text)
     {
@@ -33,7 +36,7 @@ public class HuffmanTree
             if (orderedNodes.Count >= 2)
             {
                 List<HuffmanNode> taken = orderedNodes.Take(2).ToList<HuffmanNode>();
-                Console.WriteLine($"{taken[0].c} : {taken[1].c}");
+                
                 HuffmanNode parent = new HuffmanNode()
                 {
                     c = '*',
@@ -41,6 +44,7 @@ public class HuffmanTree
                     LeftN = taken[0],
                     RightN = taken[1]
                 };
+                
                 nodes.Remove(taken[0]);
                 nodes.Remove(taken[1]);
                 nodes.Add(parent);
@@ -51,7 +55,7 @@ public class HuffmanTree
         }
     }
 
-    public List<bool> Encode(string input)
+    public BitArray Encode(string input)
     {
         List<bool> encodedText = new List<bool>();
         foreach (var c in input)
@@ -60,9 +64,9 @@ public class HuffmanTree
             encodedText.AddRange(encodedChar);
         }
 
-        return encodedText;
+        return new BitArray(encodedText.ToArray());
     }
-    public string Decode(List<bool> bits)
+    public string Decode(BitArray bits)
     {
         HuffmanNode current = this.root;
         string decoded = "";
