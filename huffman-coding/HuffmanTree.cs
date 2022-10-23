@@ -1,4 +1,5 @@
 using System.Collections;
+using huffman_coding.Manager;
 
 namespace huffman_coding;
 
@@ -6,6 +7,7 @@ public class HuffmanTree
 {
     private List<HuffmanNode> nodes = new List<HuffmanNode>();
     public Dictionary<char, int> dict = new Dictionary<char, int>(){};
+    private static TextManager _textManager = new TextManager();
     public HuffmanNode root { get; set; }
             
 
@@ -57,6 +59,8 @@ public class HuffmanTree
 
     public BitArray Encode(string input)
     {
+        Console.WriteLine("[+]Encoding file");
+            
         List<bool> encodedText = new List<bool>();
         foreach (var c in input)
         {
@@ -64,6 +68,7 @@ public class HuffmanTree
             encodedText.AddRange(encodedChar);
         }
 
+        _textManager.DisplayProgressBar();
         return new BitArray(encodedText.ToArray());
     }
     public string Decode(BitArray bits)

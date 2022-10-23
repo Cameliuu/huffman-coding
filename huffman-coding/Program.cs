@@ -4,4 +4,4 @@ using huffman_coding.Manager;
 using Figgle;
 TextManager textManager = new TextManager();
 Console.WriteLine(FiggleFonts.Banner3.Render("Huffman Encoding"));
-textManager.Run();
+textManager.Run();      
