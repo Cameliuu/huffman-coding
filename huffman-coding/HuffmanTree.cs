@@ -8,6 +8,7 @@ public class HuffmanTree
     private List<HuffmanNode> nodes = new List<HuffmanNode>();
     public Dictionary<char, int> dict = new Dictionary<char, int>(){};
     private static TextManager _textManager = new TextManager();
+    private static Informations _informations = new Informations();
     public HuffmanNode root { get; set; }
             
 
@@ -59,23 +60,32 @@ public class HuffmanTree
 
     public BitArray Encode(string input)
     {
-        Console.WriteLine("[+]Encoding file");
-            
+        
+        Console.WriteLine(input);
+        Console.WriteLine("[+]ENCODING FILE");
+        _informations.DisplayProgressBar("Encoding");
         List<bool> encodedText = new List<bool>();
+        
         foreach (var c in input)
         {
             List<bool> encodedChar = this.root.Traverse(c, new List<bool>());
+            Console.WriteLine(encodedText.Count);
             encodedText.AddRange(encodedChar);
         }
-
-        _textManager.DisplayProgressBar();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("[+]File encoded successfully!");
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.White;
         return new BitArray(encodedText.ToArray());
     }
     public string Decode(BitArray bits)
     {
+        Console.WriteLine("[+]DECODDING FILE\n");
+        _informations.DisplayProgressBar("Decoding");
+        
         HuffmanNode current = this.root;
         string decoded = "";
-
+    
         foreach (bool bit in bits)
         {
             if (bit)
@@ -99,7 +109,9 @@ public class HuffmanTree
                 current = this.root;
             }
         }
-
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("[+] FILE DECODED SUCESSFULLY");
+        Console.ForegroundColor = ConsoleColor.White;
         return decoded;
     }
 

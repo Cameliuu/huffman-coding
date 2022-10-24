@@ -5,25 +5,58 @@ namespace huffman_coding.Manager;
 
 public class TextManager
 {
-    private static string _fileContent=String.Empty;
+    private static string _fileContent = String.Empty;
     private static FileManager _fileManager = new FileManager();
     private static HuffmanTree _huffmanTree = new HuffmanTree();
-    public void Run()
+    private static PDFManager _pdfManager;
+
+    public void CompressTxtFile()
     {
-        GetFile();
         _huffmanTree.Build(_fileContent);
         BitArray encoded = _huffmanTree.Encode(_fileContent);
         byte[] bytes = ConvertToByte(encoded);
-        _fileManager.WriteCompressedFile(bytes);
+        _fileManager.WriteCompressedFile(bytes, "test1");
         Console.WriteLine("File encoded successfully!");
         Console.WriteLine();
-        
+    }
+
+    public void DecompressTxtFile()
+    {
         byte[] bytes2 = File.ReadAllBytes("test1");
         var bitarray=new BitArray (bytes2);
         string decoded = _huffmanTree.Decode(bitarray);
-            
-        File.WriteAllText("test3.txt", decoded);
+        File.WriteAllText("test1.txt", decoded);
         Console.WriteLine("Text File Decoded Successfuly\n");
+    }
+
+    public void Run()
+    {
+        string path = String.Empty;
+        do
+        {
+            Console.WriteLine("Introduceti numele fisierului!: ");
+            path=Console.ReadLine();
+            _fileContent = _fileManager.GetFileContent(path);
+        } while (_fileContent == null);
+        
+        //GetFile();
+        if (path.Contains(".txt"))
+        {
+            CompressTxtFile();
+            DecompressTxtFile();
+        }
+
+        if (path.Contains(".pdf"))
+        {
+            _pdfManager = new PDFManager(path);
+            _pdfManager.CompressPDF(_pdfManager.GetPDFContent(path));
+            _pdfManager.DecompressPDF();
+        }
+        
+
+
+
+        
     }
 
     public void DisplayProgressBar()
@@ -57,13 +90,7 @@ public class TextManager
     
     public void GetFile()
     {
-        do
-        {
-            Console.WriteLine("Introduceti numele fisierului!: ");
-            string path=Console.ReadLine();
-            _fileContent = _fileManager.GetFileContent(path);
-        } while (_fileContent == null);
-
+        
         Console.WriteLine($"Continutul fisierului este:{_fileContent}\nAcesta ocupa {_fileContent.Length*8} biti");
     }
 }
