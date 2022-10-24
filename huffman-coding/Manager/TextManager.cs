@@ -1,86 +1,84 @@
 using System.Collections;
 using ShellProgressBar;
-using System;
-using System.IO;
-using System.Text;
 
 namespace huffman_coding.Manager;
 
 public class TextManager
 {
-    private static string _fileContent=String.Empty;
+    private static string _fileContent = String.Empty;
     private static FileManager _fileManager = new FileManager();
     private static HuffmanTree _huffmanTree = new HuffmanTree();
-    public void Run()
+    private static PDFManager _pdfManager;
+
+    public void CompressTxtFile()
     {
-        GetFile();
         _huffmanTree.Build(_fileContent);
         BitArray encoded = _huffmanTree.Encode(_fileContent);
         byte[] bytes = ConvertToByte(encoded);
-        _fileManager.WriteCompressedFile(bytes);
-        DisplayFileInfo("test3.txt");
+        _fileManager.WriteCompressedFile(bytes, "test1");
+        Console.WriteLine("File encoded successfully!");
+        Console.WriteLine();
+    }
+
+    public void DecompressTxtFile()
+    {
         byte[] bytes2 = File.ReadAllBytes("test1");
         var bitarray=new BitArray (bytes2);
         string decoded = _huffmanTree.Decode(bitarray);
-            
-        File.WriteAllText("test3.txt", decoded);
+        File.WriteAllText("test1.txt", decoded);
+        Console.WriteLine("Text File Decoded Successfuly\n");
     }
 
-    public void DisplayProgressBar(string coding)
+    public void Run()
     {
-        ProgressBarOptions? options;
-        options = new ProgressBarOptions();
-        const int totalTicks = 10;
-        switch (coding)
+        string path = String.Empty;
+        do
         {
-            case "Encoding":
+            Console.WriteLine("Introduceti numele fisierului!: ");
+            path=Console.ReadLine();
+            _fileContent = _fileManager.GetFileContent(path);
+        } while (_fileContent == null);
+        
+        //GetFile();
+        if (path.Contains(".txt"))
+        {
+            CompressTxtFile();
+            DecompressTxtFile();
+        }
 
-
-                    options.ProgressCharacter = '#';
-                    options.ForegroundColorError = ConsoleColor.Red;
-                    options.ForegroundColor = ConsoleColor.Green;
-                    options.ShowEstimatedDuration = false;
-                    options.ProgressBarOnBottom = true;
-                    options.DisplayTimeInRealTime = false;
-                
-                break;
-            case "Decoding":
-                 {
-                    options.ProgressCharacter = '#';
-                    options.ForegroundColorError = ConsoleColor.Red;
-                    options.ForegroundColor = ConsoleColor.DarkRed;
-                    options.ShowEstimatedDuration = false;
-                    options.ProgressBarOnBottom = true;
-                    options.DisplayTimeInRealTime = false;
-                };
-                break;
+        if (path.Contains(".pdf"))
+        {
+            _pdfManager = new PDFManager(path);
+            _pdfManager.CompressPDF(_pdfManager.GetPDFContent(path));
+            _pdfManager.DecompressPDF();
         }
         
-        using (var pbar = new ProgressBar(totalTicks, $"{coding} in progress", options))
+
+
+
+        
+    }
+
+    public void DisplayProgressBar()
+    {
+        const int totalTicks = 10;
+        var options = new ProgressBarOptions
+        {
+            ProgressCharacter = '#',
+            ForegroundColorError = ConsoleColor.Red,
+            ShowEstimatedDuration = false,
+            ProgressBarOnBottom = true,
+            DisplayTimeInRealTime = false
+        };
+        using (var pbar = new ProgressBar(totalTicks, "Encoding in progress", options))
         {
             for(int i=1;i<=10;i++)
             {
                 pbar.Tick();
-                System.Threading.Thread.Sleep(25);
+                System.Threading.Thread.Sleep(50);
             }
-            pbar.Message = $"{coding} Complete!";
+            pbar.Message = "Encoding Complete!";
         }
-
-        Console.WriteLine("\n");
-    }
-
-    public void DisplayFileInfo(string path)
-    {
-        FileInfo fileInfo = new FileInfo(path);
-        Console.WriteLine("--------------------------------------INFORMATII FISIER--------------------------------------");
-        Console.WriteLine($"Marime:{path.Length}");
-    }
-    
-
-    public long GetFileSize(string path)    
-    {
-        FileInfo fileInfo = new FileInfo(path);
-        return path.Length;
     }
 
     static byte[] ConvertToByte(BitArray bits) {
@@ -92,13 +90,7 @@ public class TextManager
     
     public void GetFile()
     {
-        do
-        {
-            Console.WriteLine("Introduceti numele fisierului!: ");
-            string path=Console.ReadLine();
-            _fileContent = _fileManager.GetFileContent(path);
-        } while (_fileContent == null);
-
+        
         Console.WriteLine($"Continutul fisierului este:{_fileContent}\nAcesta ocupa {_fileContent.Length*8} biti");
     }
 }

@@ -7,6 +7,7 @@ public class FileManager
     
     public string GetFileContent(string path)
     {
+        Console.WriteLine("intra");
         if (path.Equals(String.Empty))
         {
             Console.WriteLine("Introduceti va rog numele fisierului!");
@@ -27,13 +28,12 @@ public class FileManager
         return File.ReadAllBytes(path);
     }
 
-    public void WriteCompressedFile(byte[] data)
+    public void WriteCompressedFile(byte[] data,string file)
     {
-        string name = "test1";
-        if (!File.Exists(name))
-            File.Create(name);
+        if (!File.Exists(file))
+            File.Create(file);
         
-            File.WriteAllBytes(name,data);
+            File.WriteAllBytes(file,data);
         
     }
 }
