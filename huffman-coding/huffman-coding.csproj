@@ -9,9 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DocX" Version="2.3.0" />
       <PackageReference Include="Figgle" Version="0.4.0" />
+      <PackageReference Include="GemBox.Document" Version="35.0.1130" />
       <PackageReference Include="itext7" Version="7.2.3" />
+      <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
       <PackageReference Include="ShellProgressBar" Version="5.2.0" />
+      <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="20.3.0.50" />
     </ItemGroup>
 
 </Project>
