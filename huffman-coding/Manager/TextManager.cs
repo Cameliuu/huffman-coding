@@ -5,6 +5,7 @@ namespace huffman_coding.Manager;
 
 public class TextManager
 {
+    private static WordManager _wordManager;
     private static string _fileContent = String.Empty;
     private static FileManager _fileManager = new FileManager();
     private static HuffmanTree _huffmanTree = new HuffmanTree();
@@ -52,11 +53,16 @@ public class TextManager
             _pdfManager.CompressPDF(_pdfManager.GetPDFContent(path));
             _pdfManager.DecompressPDF();
         }
-        
+
+        if (path.Contains(".docx"))
+        {
+            _wordManager = new WordManager(path);
+            _wordManager.CompressWord(_wordManager.GetWordContent(path));
+            _wordManager.DecompressWord();
+        }
 
 
 
-        
     }
 
     public void DisplayProgressBar()
