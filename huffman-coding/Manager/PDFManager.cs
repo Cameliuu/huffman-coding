@@ -11,20 +11,18 @@ namespace huffman_coding.Manager;
 public class PDFManager
 {
     private String _file;
-    private FileManager _fileManager = new FileManager();
-    private HuffmanTree _huffmanTree = new HuffmanTree();
-    private Informations _informations = new Informations();
-    private string _output = "test3";
-    private string decompressed = "test3.pdf";
+    private static string pdfFile = "pdf.pdf";
+    private static string _output = "test3";
+    private static string decompressed = "test3.pdf";
     public PDFManager(string file)
     {
         this._file = file;
     }
 
-    public string GetPDFContent(string file)
+    public static string GetPDFContent(string file)
     {
         StringBuilder text = new StringBuilder();
-        using (PdfReader reader = new PdfReader("lorem-ipsum.pdf"))
+        using (PdfReader reader = new PdfReader(pdfFile))
         {
             PdfDocument doc = new PdfDocument(reader);
             for (int i = 1; i <= doc.GetNumberOfPages(); i++)
@@ -37,20 +35,20 @@ public class PDFManager
 
     }
 
-    public void CompressPDF(string data)
+    public static void CompressPDF(string data)
     {
-        _huffmanTree.Build(data);
-        BitArray encoded = _huffmanTree.Encode(GetPDFContent("lorem-ipsum.pdf"));
+        HuffmanTree.Build(data);
+        BitArray encoded = HuffmanTree.Encode(GetPDFContent(pdfFile));
         Console.WriteLine(encoded);
-        byte[] bytes = _informations.ConvertToByte(encoded);
-        _fileManager.WriteCompressedFile(bytes,_output);
+        byte[] bytes = Informations.ConvertToByte(encoded);
+        FileManager.WriteCompressedFile(bytes,_output);
     }
 
-    public void DecompressPDF()
+    public static void DecompressPDF()
     {
         byte[] bytes2 = File.ReadAllBytes(_output);
         var bitarray=new BitArray (bytes2);
-        string decoded = _huffmanTree.Decode(bitarray);
+        string decoded = HuffmanTree.Decode(bitarray);
         PdfWriter writer = new PdfWriter(decompressed);
         PdfDocument pdf = new PdfDocument(writer);
         Document doc = new Document(pdf);
@@ -58,4 +56,9 @@ public class PDFManager
         doc.Close();
     }
 
+    public static void Run()
+    {
+        CompressPDF(GetPDFContent(pdfFile));
+        DecompressPDF();
+    }
 }

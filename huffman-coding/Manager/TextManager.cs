@@ -1,5 +1,6 @@
 using System.Collections;
 using ShellProgressBar;
+using Syncfusion.Drawing;
 
 namespace huffman_coding.Manager;
 
@@ -7,16 +8,16 @@ public class TextManager
 {
     private static WordManager _wordManager;
     private static string _fileContent = String.Empty;
-    private static FileManager _fileManager = new FileManager();
-    private static HuffmanTree _huffmanTree = new HuffmanTree();
-    private static PDFManager _pdfManager;
+    private static string txtFile= "text.txt";
+    private static string output = "test1";
+    private static string decompressed = "test1.txt";
 
     public void CompressTxtFile()
     {
-        _huffmanTree.Build(_fileContent);
-        BitArray encoded = _huffmanTree.Encode(_fileContent);
+        HuffmanTree.Build(_fileContent);
+        BitArray encoded = HuffmanTree.Encode(_fileContent);
         byte[] bytes = ConvertToByte(encoded);
-        _fileManager.WriteCompressedFile(bytes, "test1");
+        FileManager.WriteCompressedFile(bytes, "test1");
         Console.WriteLine("File encoded successfully!");
         Console.WriteLine();
     }
@@ -25,44 +26,17 @@ public class TextManager
     {
         byte[] bytes2 = File.ReadAllBytes("test1");
         var bitarray=new BitArray (bytes2);
-        string decoded = _huffmanTree.Decode(bitarray);
+        string decoded = HuffmanTree.Decode(bitarray);
         File.WriteAllText("test1.txt", decoded);
         Console.WriteLine("Text File Decoded Successfuly\n");
     }
 
     public void Run()
     {
-        string path = String.Empty;
-        do
-        {
-            Console.WriteLine("Introduceti numele fisierului!: ");
-            path=Console.ReadLine();
-            _fileContent = _fileManager.GetFileContent(path);
-        } while (_fileContent == null);
-        
-        //GetFile();
-        if (path.Contains(".txt"))
-        {
-            CompressTxtFile();
-            DecompressTxtFile();
-        }
-
-        if (path.Contains(".pdf"))
-        {
-            _pdfManager = new PDFManager(path);
-            _pdfManager.CompressPDF(_pdfManager.GetPDFContent(path));
-            _pdfManager.DecompressPDF();
-        }
-
-        if (path.Contains(".docx"))
-        {
-            _wordManager = new WordManager(path);
-            _wordManager.CompressWord(_wordManager.GetWordContent(path));
-            _wordManager.DecompressWord();
-        }
-
-
-
+        Console.WriteLine("[ + ] RUNNING HUFFMAN ALGORITM FOR TXT FILE", Color.Green);
+        _fileContent = FileManager.GetFileContent(txtFile);
+        CompressTxtFile();
+        DecompressTxtFile();
     }
 
     public void DisplayProgressBar()

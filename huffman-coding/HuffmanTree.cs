@@ -5,14 +5,14 @@ namespace huffman_coding;
 
 public class HuffmanTree
 {
-    private List<HuffmanNode> nodes = new List<HuffmanNode>();
-    public Dictionary<char, int> dict = new Dictionary<char, int>(){};
+    private static List<HuffmanNode> nodes = new List<HuffmanNode>();
+    public static Dictionary<char, int> dict = new Dictionary<char, int>(){};
     private static TextManager _textManager = new TextManager();
     private static Informations _informations = new Informations();
-    public HuffmanNode root { get; set; }
+    public static HuffmanNode root { get; set; }
             
 
-    public void Build(string text)
+    public static void Build(string text)
     {
         foreach (var c in text)
         {
@@ -54,11 +54,11 @@ public class HuffmanTree
                 
             }
 
-            this.root = nodes.FirstOrDefault();
+            root = nodes.FirstOrDefault();
         }
     }
 
-    public BitArray Encode(string input)
+    public static BitArray Encode(string input)
     {
         
         Console.WriteLine(input);
@@ -68,7 +68,7 @@ public class HuffmanTree
         
         foreach (var c in input)
         {
-            List<bool> encodedChar = this.root.Traverse(c, new List<bool>());
+            List<bool> encodedChar =  root.Traverse(c, new List<bool>());
             Console.WriteLine(encodedText.Count);
             encodedText.AddRange(encodedChar);
         }
@@ -78,12 +78,12 @@ public class HuffmanTree
         Console.ForegroundColor = ConsoleColor.White;
         return new BitArray(encodedText.ToArray());
     }
-    public string Decode(BitArray bits)
+    public static string Decode(BitArray bits)
     {
         Console.WriteLine("[+]DECODDING FILE\n");
         _informations.DisplayProgressBar("Decoding");
         
-        HuffmanNode current = this.root;
+        HuffmanNode current = root;
         string decoded = "";
     
         foreach (bool bit in bits)
@@ -106,7 +106,7 @@ public class HuffmanTree
             if (IsLeaf(current))
             {
                 decoded += current.c;
-                current = this.root;
+                current = root;
             }
         }
         Console.ForegroundColor = ConsoleColor.Red;
@@ -115,7 +115,7 @@ public class HuffmanTree
         return decoded;
     }
 
-    public bool IsLeaf(HuffmanNode node)
+    public static bool IsLeaf(HuffmanNode node)
     {
         return (node.LeftN == null && node.RightN == null);
     }

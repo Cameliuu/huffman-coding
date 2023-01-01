@@ -5,7 +5,7 @@ namespace huffman_coding.Manager;
 public class FileManager
 {
     
-    public string GetFileContent(string path)
+    public static string GetFileContent(string path)
     {
         Console.WriteLine("intra");
         if (path.Equals(String.Empty))
@@ -28,7 +28,7 @@ public class FileManager
         return File.ReadAllBytes(path);
     }
 
-    public void WriteCompressedFile(byte[] data,string file)
+    public static void WriteCompressedFile(byte[] data,string file)
     {
         if (!File.Exists(file))
             File.Create(file);

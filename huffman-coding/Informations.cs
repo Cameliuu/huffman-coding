@@ -62,7 +62,7 @@ public class Informations
         return path.Length;
     }
 
-    public byte[] ConvertToByte(BitArray bits) {
+    public static byte[] ConvertToByte(BitArray bits) {
         byte[] bytes = new byte[bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1)];
         bits.CopyTo(bytes, 0);;
         return bytes;
