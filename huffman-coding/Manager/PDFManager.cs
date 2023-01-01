@@ -11,8 +11,8 @@ namespace huffman_coding.Manager;
 public class PDFManager
 {
     private String _file;
-    private static string pdfFile = "pdf.pdf";
-    private static string _output = "test3";
+    public static string pdfFile = "pdf.pdf";
+    public static string output = "test3";
     private static string decompressed = "test3.pdf";
     public PDFManager(string file)
     {
@@ -39,14 +39,13 @@ public class PDFManager
     {
         HuffmanTree.Build(data);
         BitArray encoded = HuffmanTree.Encode(GetPDFContent(pdfFile));
-        Console.WriteLine(encoded);
         byte[] bytes = Informations.ConvertToByte(encoded);
-        FileManager.WriteCompressedFile(bytes,_output);
+        FileManager.WriteCompressedFile(bytes,output);
     }
 
     public static void DecompressPDF()
     {
-        byte[] bytes2 = File.ReadAllBytes(_output);
+        byte[] bytes2 = File.ReadAllBytes(output);
         var bitarray=new BitArray (bytes2);
         string decoded = HuffmanTree.Decode(bitarray);
         PdfWriter writer = new PdfWriter(decompressed);
@@ -58,7 +57,12 @@ public class PDFManager
 
     public static void Run()
     {
+        Console.WriteLine("[ + ] RUNNING HUFFMAN ALGORITHM FOR PDF FILE");
         CompressPDF(GetPDFContent(pdfFile));
         DecompressPDF();
+        Console.ForegroundColor =ConsoleColor.Green;
+        Console.WriteLine("[ + ] HUFFMAN ALGORITHM EXECUTED SUCCESSFULLY FOR PDF FILE");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine();
     }
 }

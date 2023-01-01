@@ -8,8 +8,8 @@ public class TextManager
 {
     private static WordManager _wordManager;
     private static string _fileContent = String.Empty;
-    private static string txtFile= "text.txt";
-    private static string output = "test1";
+    public static string txtFile= "text.txt";
+    public static string output = "test1";
     private static string decompressed = "test1.txt";
 
     public void CompressTxtFile()
@@ -18,7 +18,7 @@ public class TextManager
         BitArray encoded = HuffmanTree.Encode(_fileContent);
         byte[] bytes = ConvertToByte(encoded);
         FileManager.WriteCompressedFile(bytes, "test1");
-        Console.WriteLine("File encoded successfully!");
+   
         Console.WriteLine();
     }
 
@@ -28,38 +28,25 @@ public class TextManager
         var bitarray=new BitArray (bytes2);
         string decoded = HuffmanTree.Decode(bitarray);
         File.WriteAllText("test1.txt", decoded);
-        Console.WriteLine("Text File Decoded Successfuly\n");
+     
     }
 
     public void Run()
     {
-        Console.WriteLine("[ + ] RUNNING HUFFMAN ALGORITM FOR TXT FILE", Color.Green);
+        
         _fileContent = FileManager.GetFileContent(txtFile);
         CompressTxtFile();
         DecompressTxtFile();
+        Console.WriteLine("[ + ] RUNNING HUFFMAN ALGORITHM FOR TEXT FILE");
+        Console.ForegroundColor =ConsoleColor.Green;
+        
+        Console.WriteLine("[ + ] HUFFMAN ALGORITHM EXECUTED SUCCESSFULLY FOR TEXT FILE");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine();
+
     }
 
-    public void DisplayProgressBar()
-    {
-        const int totalTicks = 10;
-        var options = new ProgressBarOptions
-        {
-            ProgressCharacter = '#',
-            ForegroundColorError = ConsoleColor.Red,
-            ShowEstimatedDuration = false,
-            ProgressBarOnBottom = true,
-            DisplayTimeInRealTime = false
-        };
-        using (var pbar = new ProgressBar(totalTicks, "Encoding in progress", options))
-        {
-            for(int i=1;i<=10;i++)
-            {
-                pbar.Tick();
-                System.Threading.Thread.Sleep(50);
-            }
-            pbar.Message = "Encoding Complete!";
-        }
-    }
+  
 
     static byte[] ConvertToByte(BitArray bits) {
         byte[] bytes = new byte[bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1)];
@@ -68,9 +55,4 @@ public class TextManager
     }
 
     
-    public void GetFile()
-    {
-        
-        Console.WriteLine($"Continutul fisierului este:{_fileContent}\nAcesta ocupa {_fileContent.Length*8} biti");
-    }
 }

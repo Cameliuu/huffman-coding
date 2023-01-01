@@ -7,7 +7,7 @@ public class FileManager
     
     public static string GetFileContent(string path)
     {
-        Console.WriteLine("intra");
+   
         if (path.Equals(String.Empty))
         {
             Console.WriteLine("Introduceti va rog numele fisierului!");

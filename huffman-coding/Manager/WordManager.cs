@@ -12,9 +12,9 @@ namespace huffman_coding.Manager;
 public class WordManager
 {
     public static String _file =String.Empty;
- 
-    private static string wordFile = "word.docx";
-    private static string _output = "test2";
+
+    public static string wordFile = "word.docx";
+    public static string output = "test2";
     private static string decompressed = "test2.docx";
     
     
@@ -42,14 +42,14 @@ public class WordManager
         HuffmanTree.Build(data);
         BitArray encoded = HuffmanTree.Encode(GetWordContent(_file));
         byte[] bytes =Informations.ConvertToByte(encoded);
-        FileManager.WriteCompressedFile(bytes,_output);
+        FileManager.WriteCompressedFile(bytes,output);
     }
 
   
 
     public static void DecompressWord()
     {
-        byte[] bytes2 = File.ReadAllBytes(_output);
+        byte[] bytes2 = File.ReadAllBytes(output);
         var bitarray=new BitArray (bytes2);
         string decoded = HuffmanTree.Decode(bitarray);
         ComponentInfo.SetLicense("FREE-LIMITED-KEY");
@@ -67,7 +67,12 @@ public class WordManager
     }
     public static void Run()
     {
+        Console.WriteLine("[ + ] RUNNING HUFFMAN ALGORITHM FOR WORD FILE");
         CompressWord(GetWordContent(wordFile));
         DecompressWord();
+        Console.ForegroundColor =ConsoleColor.Green;
+        Console.WriteLine("[ + ] HUFFMAN ALGORITHM EXECUTED SUCCESSFULLY FOR WORD FILE");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine();
     }
 }

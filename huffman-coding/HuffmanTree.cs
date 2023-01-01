@@ -61,27 +61,18 @@ public class HuffmanTree
     public static BitArray Encode(string input)
     {
         
-        Console.WriteLine(input);
-        Console.WriteLine("[+]ENCODING FILE");
-        _informations.DisplayProgressBar("Encoding");
         List<bool> encodedText = new List<bool>();
         
         foreach (var c in input)
-        {
-            List<bool> encodedChar =  root.Traverse(c, new List<bool>());
-            Console.WriteLine(encodedText.Count);
+        {            List<bool> encodedChar =  root.Traverse(c, new List<bool>());
+            
             encodedText.AddRange(encodedChar);
         }
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("[+]File encoded successfully!");
-        Console.WriteLine();
-        Console.ForegroundColor = ConsoleColor.White;
         return new BitArray(encodedText.ToArray());
     }
     public static string Decode(BitArray bits)
     {
-        Console.WriteLine("[+]DECODDING FILE\n");
-        _informations.DisplayProgressBar("Decoding");
+        
         
         HuffmanNode current = root;
         string decoded = "";
@@ -109,9 +100,7 @@ public class HuffmanTree
                 current = root;
             }
         }
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("[+] FILE DECODED SUCESSFULLY");
-        Console.ForegroundColor = ConsoleColor.White;
+     
         return decoded;
     }
 

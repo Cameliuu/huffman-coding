@@ -1,18 +1,19 @@
 using System.Collections;
+using huffman_coding.Manager;
 using ShellProgressBar;
 
 namespace huffman_coding;
 
 public class Informations
 {
-    public void DisplayProgressBar(string coding)
+    public static void DisplayProgressBar(string coding)
     {
         ProgressBarOptions? options;
         options = new ProgressBarOptions();
         const int totalTicks = 10;
         switch (coding)
         {
-            case "Encoding":
+            case "ENCODING":
 
 
                     options.ProgressCharacter = '#';
@@ -23,7 +24,7 @@ public class Informations
                     options.DisplayTimeInRealTime = false;
                 
                 break;
-            case "Decoding":
+            case "DECODING":
                  {
                     options.ProgressCharacter = '#';
                     options.ForegroundColorError = ConsoleColor.Red;
@@ -48,18 +49,25 @@ public class Informations
         Console.WriteLine("\n");
     }
 
-    public void DisplayFileInfo(string path)
-    {
-        FileInfo fileInfo = new FileInfo(path);
-        Console.WriteLine("--------------------------------------INFORMATII FISIER--------------------------------------");
-        Console.WriteLine($"Marime:{path.Length}");
-    }
     
 
-    public long GetFileSize(string path)    
+    public static void DisplayInfo(string file1, string file2)
     {
-        FileInfo fileInfo = new FileInfo(path);
-        return path.Length;
+        FileInfo fi1 = new FileInfo(file1);
+        FileInfo fi2 = new FileInfo(file2);
+        
+        Console.WriteLine($"\nMarimea fisierului inainte de compresie: {fi1.Length}\nMarimea fisierului in urma compresiei : {fi2.Length}");
+        Console.WriteLine($"In urma procesului de compresie s-au economisit {fi1.Length - fi2.Length} bytes");
+    }
+
+    public static void Show()
+    {
+        Console.WriteLine("TEXT FILE INFO");
+        DisplayInfo(TextManager.txtFile,TextManager.output);
+        Console.WriteLine("WORD FILE INFO");
+        DisplayInfo(WordManager.wordFile, WordManager.output);
+        Console.WriteLine("PDF FILE INFO");
+        DisplayInfo(PDFManager.pdfFile,PDFManager.output);
     }
 
     public static byte[] ConvertToByte(BitArray bits) {
