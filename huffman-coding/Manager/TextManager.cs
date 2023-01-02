@@ -7,10 +7,11 @@ namespace huffman_coding.Manager;
 public class TextManager
 {
     private static WordManager _wordManager;
-    private static string _fileContent = String.Empty;
+    public static string _fileContent = String.Empty;
     public static string txtFile= "text.txt";
     public static string output = "test1";
     private static string decompressed = "test1.txt";
+
 
     public void CompressTxtFile()
     {

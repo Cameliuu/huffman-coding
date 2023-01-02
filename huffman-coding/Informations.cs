@@ -51,23 +51,25 @@ public class Informations
 
     
 
-    public static void DisplayInfo(string file1, string file2)
+    public static void DisplayInfo(string file1, string file2,string text)
     {
         FileInfo fi1 = new FileInfo(file1);
         FileInfo fi2 = new FileInfo(file2);
-        
+        Console.WriteLine("---------------------------------------------------------------------------------------------------------");
         Console.WriteLine($"\nMarimea fisierului inainte de compresie: {fi1.Length}\nMarimea fisierului in urma compresiei : {fi2.Length}");
         Console.WriteLine($"In urma procesului de compresie s-au economisit {fi1.Length - fi2.Length} bytes");
+        Console.WriteLine($"Continutul fisierului:\n {text}");
+        Console.WriteLine("---------------------------------------------------------------------------------------------------------");
     }
 
     public static void Show()
     {
         Console.WriteLine("TEXT FILE INFO");
-        DisplayInfo(TextManager.txtFile,TextManager.output);
+        DisplayInfo(TextManager.txtFile,TextManager.output, TextManager._fileContent);
         Console.WriteLine("WORD FILE INFO");
-        DisplayInfo(WordManager.wordFile, WordManager.output);
+        DisplayInfo(WordManager.wordFile, WordManager.output, WordManager.content);
         Console.WriteLine("PDF FILE INFO");
-        DisplayInfo(PDFManager.pdfFile,PDFManager.output);
+        DisplayInfo(PDFManager.pdfFile,PDFManager.output, PDFManager.content);
     }
 
     public static byte[] ConvertToByte(BitArray bits) {

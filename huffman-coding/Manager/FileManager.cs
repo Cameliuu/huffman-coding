@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Net;
+using Microsoft.VisualBasic;
 
 namespace huffman_coding.Manager;
 
@@ -30,10 +32,13 @@ public class FileManager
 
     public static void WriteCompressedFile(byte[] data,string file)
     {
-        if (!File.Exists(file))
-            File.Create(file);
-        
-            File.WriteAllBytes(file,data);
-        
+        using (var stream = File.Create(file))
+        {
+        }
+
+
+        File.WriteAllBytes(file,data);
+       
+
     }
 }

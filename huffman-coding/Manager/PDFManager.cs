@@ -14,6 +14,7 @@ public class PDFManager
     public static string pdfFile = "pdf.pdf";
     public static string output = "test3";
     private static string decompressed = "test3.pdf";
+    public static string content = String.Empty;
     public PDFManager(string file)
     {
         this._file = file;
@@ -31,6 +32,7 @@ public class PDFManager
             }
         }
 
+        content = text.ToString();
         return text.ToString();
 
     }

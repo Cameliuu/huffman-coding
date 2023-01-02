@@ -16,7 +16,7 @@ public class WordManager
     public static string wordFile = "word.docx";
     public static string output = "test2";
     private static string decompressed = "test2.docx";
-    
+    public static string content = String.Empty;
     
     public static string GetWordContent(string file)
     {
@@ -29,12 +29,12 @@ public class WordManager
                 document.Open(source,FormatType.Docx);
            
                 string text = document.GetText();
-            
+                
                 processed.Append(text);
             }
         }
 
-      
+        content = processed.ToString().Substring(61);
         return processed.ToString().Substring(61);
     }
     public static void CompressWord(string data)
