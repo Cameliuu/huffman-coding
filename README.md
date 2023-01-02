@@ -1,5 +1,5 @@
 
-![Imgur](https://imgur.com/oR9ghiS)
+# Huffman Coding
 
 Huffman Coding is a technique of compressing data to reduce its size without losing any of the details. It was first developed by David Huffman.
 
